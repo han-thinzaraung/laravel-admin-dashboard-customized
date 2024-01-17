@@ -5,6 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <div class="card-body align-items-center m-4">
+
+                <h3 class="text-dark mb-3"> Edit Category </h3>
+                
                 <form action="{{route('category.update' , $category->id)}}" method="post">
                 @method('PUT')
                 @csrf
@@ -30,6 +34,7 @@
                 
                 </div>
                 </form>
+                </div>
             </div>
         </div>
     </div>

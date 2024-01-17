@@ -7,20 +7,31 @@
             <div class="card">
                 <div class="card-body shadow">
 
+                    <h3 class="text-dark mb-3"> Item List </h3>
+
                     @if(session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-times"></i>
+                        </button>
                         {{ session('success') }}
                     </div>
                     @endif
 
                     @if(session('update'))
-                    <div class="alert alert-info">
+                    <div class="alert alert-primary alert-dismissible" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-times"></i>
+                        </button>
                         {{ session('update') }}
                     </div>
                     @endif
 
                     @if(session('delete'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-times"></i>
+                        </button>
                         {{ session('delete') }}
                     </div>
                     @endif
@@ -32,7 +43,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Item Name</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Category ID</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Expired Date</th>
                             <th scope="col">Action</th>
                           </tr>
@@ -44,17 +55,17 @@
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->price }}</td>
-                                <td>{{ $item->category_id }}</td>
+                                <td>{{ $item->category->name }}</td>
                                 <td>{{ $item->expired_date }}</td>
 
                                 <td>
-                                    <a href="{{ route('category.edit', $category->id) }}" class="btn btn-outline-warning">
+                                    <a href="{{ route('item.edit', $item->id) }}" class="btn btn-outline-warning">
                                       <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a href="{{ route('category.show', $category->id) }}" class="btn btn-outline-primary">
+                                    <a href="{{ route('item.show', $item->id) }}" class="btn btn-outline-primary">
                                         <i class="fas fa-info"></i>
                                     </a>
-                                   <form method="post" action = "{{ route('category.destroy', $category->id) }}" class="d-inline-block">
+                                   <form method="post" action = "{{ route('item.destroy', $item->id) }}" class="d-inline-block">
                                     @method('delete')
                                     @csrf
                                     <button class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fas fa-trash-alt"></i></button>
@@ -62,9 +73,13 @@
                                 </td> 
                             </tr> 
                             @endforeach
-                      
+                        
                         </tbody>
-                      </table>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        {{ $items->links() }}
+                    </div>
+                     
                 </div>
              
             </div>

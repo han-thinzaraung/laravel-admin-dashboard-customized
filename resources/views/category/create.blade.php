@@ -9,6 +9,8 @@
             
                 <div class="card-body align-items-center m-4">
 
+                    <h3 class="text-dark mb-3"> Create Category </h3>
+
                     <form action="{{route('category.store')}}" method="post">
                         @csrf
                     

@@ -17,8 +17,8 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->foreignId('category_id');
-            $table->dateTime('expired_date');
+            $table->date('expired_date')->nullable();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -7,23 +7,35 @@
             <div class="card">
                 <div class="card-body shadow">
 
+                    <h3 class="text-dark mb-3"> Category List </h3>
+
                     @if(session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-times"></i>
+                        </button>
                         {{ session('success') }}
                     </div>
                     @endif
 
                     @if(session('update'))
-                    <div class="alert alert-info">
+                    <div class="alert alert-primary alert-dismissible" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-times"></i>
+                        </button>
                         {{ session('update') }}
                     </div>
                     @endif
 
                     @if(session('delete'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="fa fa-times"></i>
+                        </button>
                         {{ session('delete') }}
                     </div>
                     @endif
+                    
                   
                     <table class="table">
                     

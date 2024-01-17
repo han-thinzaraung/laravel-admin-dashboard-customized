@@ -21,8 +21,7 @@ class ItemController extends Controller
 
     public function index()
     {
-        $items = Item::all();
-        //return $categories;
+        $items = Item::orderBy("items.category_id")->paginate(5);
         return view('item.index',compact('items'));
     }
 
@@ -49,8 +48,8 @@ class ItemController extends Controller
         $item = new Item;
         $item->name= $request->name;
         $item->price= $request->price;
-        $item->category_id = $request->input('category_id');
-        $item->expire_date= $request->expire_date;
+        $item->category_id = $request->category_id;
+        $item->expired_date= $request->expired_date;
         $item->save();
         return redirect()->route('item.index')->with('success','New Item is Created Successfully');
     }
@@ -63,7 +62,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return view('item.detail',compact('item'));
     }
 
     /**
@@ -74,7 +73,8 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        $categories = Category::all();
+        return view('item.edit', compact('item' , 'categories'));
     }
 
     /**
@@ -86,7 +86,13 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
-        //
+        $item->name= $request->name;
+        $item->price= $request->price;
+        $item->category_id = $request->category_id;
+        $item->expired_date= $request->expired_date;
+        $item->update();
+        // return $request;
+        return redirect()->route('item.index')->with('update','Item is Updated Successfully');
     }
 
     /**
@@ -97,6 +103,9 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        if($item){
+            $item->delete();
+        }
+        return redirect()->back()->with('delete','Item is Deleted Successfully');
     }
 }
