@@ -9,7 +9,7 @@
 
                 <h3 class="text-dark mb-3"> Edit Item </h3>
 
-                <form action="{{route('item.update' , $item->id)}}" method="post">
+                <form action="{{route('item.update' , $item->id)}}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                
@@ -54,6 +54,17 @@
                         @error('expired_date')
                         <div class="text-danger">*{{$message}}</div>
                         @enderror
+
+                </div>
+
+                <div class="col-auto">
+                    <label class="col-form-label">Upload Image<small class="text-danger">*</small></label><br><br>
+                    <img src="{{ asset('/storage/gallery/' . $item->image) }}" alt="{{ $item->name }} Image" style="width: 50px; height: 50px;">
+                    <input type="file"  class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}">
+
+                    @error('image')
+                    <div class="text-danger">*{{$message}}</div>
+                    @enderror
 
                 </div>
                    

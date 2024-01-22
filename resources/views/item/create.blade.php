@@ -10,7 +10,7 @@
                 <div class="card-body align-items-center m-4">
                     <h3 class="text-dark mb-3"> Create Item </h3>
 
-                    <form action="{{route('item.store')}}" method="post">
+                    <form action="{{route('item.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                     
                         <div class="col-auto">
@@ -57,10 +57,22 @@
 
                         </div>
 
+                        <div class="col-auto">
+                            <label class="col-form-label">Upload Image<small class="text-danger">*</small></label>
+                            <input type="file"  class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}">
+
+                            @error('image')
+                            <div class="text-danger">*{{$message}}</div>
+                            @enderror
+
+                        </div>
+
                         <div class="col-sm mt-3">
                         <a href="{{ route('item.index') }}" class="btn btn-outline-dark">Back</a>
                         <button type="submit" class="btn btn-outline-primary">Create</button>
                         </div> 
+
+                        
                         
                     </form>
                 </div>

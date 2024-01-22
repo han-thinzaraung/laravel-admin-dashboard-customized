@@ -23,6 +23,7 @@ class ItemController extends Controller
     {
         $items = Item::orderBy("items.category_id")->paginate(5);
         return view('item.index',compact('items'));
+        // return view('index',compact('items'));
     }
 
     /**
@@ -45,11 +46,18 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
+        // return $request;
+        // return $request->image;
+        $image = $request->image;
+        $newName = "gallery_".uniqid().".".$image->extension();
+        $image->storeAs("public/gallery",$newName);
+
         $item = new Item;
         $item->name= $request->name;
         $item->price= $request->price;
         $item->category_id = $request->category_id;
         $item->expired_date= $request->expired_date;
+        $item->image = $newName;
         $item->save();
         return redirect()->route('item.index')->with('success','New Item is Created Successfully');
     }
@@ -86,6 +94,18 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
+        if($request->image){
+            $image = $request->image;
+            $newName = "gallery_".uniqid().".".$image->extension();
+            $image->storeAs("public/gallery",$newName);
+    
+            $item->name= $request->name;
+            $item->price= $request->price;
+            $item->category_id = $request->category_id;
+            $item->expired_date= $request->expired_date;
+            $item->image = $newName;
+            $item->update();
+        }
         $item->name= $request->name;
         $item->price= $request->price;
         $item->category_id = $request->category_id;
